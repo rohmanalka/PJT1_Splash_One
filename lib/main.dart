@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'features/auth/pages/login_page.dart';
+import 'features/home/pages/home_page.dart';
+import 'features/meter/pages/customer_page.dart';
+import 'features/meter/pages/district_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +19,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
       home: const LoginPage(),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const HomePage(),
+        '/customer': (context) => const CustomerPage(),
+        '/district': (context) => const DistrictPage(),
+      },
     );
   }
 }

@@ -46,7 +46,9 @@ class CustomerPage extends StatelessWidget {
               ),
               subtitle: Text(customer['address'] as String),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/detail', arguments: customer);
+              },
             ),
           );
         },

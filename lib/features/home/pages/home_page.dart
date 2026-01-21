@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../core/widgets/custom_card.dart';
-import '../../meter/pages/customer_page.dart';
-import '../../meter/pages/district_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -82,6 +82,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  void _login() {}
 }

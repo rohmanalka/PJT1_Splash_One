@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pjt1_splash_one/core/widgets/custom_text_field.dart';
+import '../../../core/widgets/custom_text_field.dart';
+import '../../home/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -55,7 +56,12 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _login,
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
                     disabledBackgroundColor: Colors.blueAccent.withOpacity(0.5),
@@ -77,7 +83,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _login() {
-
-  }
+  void _login() {}
 }

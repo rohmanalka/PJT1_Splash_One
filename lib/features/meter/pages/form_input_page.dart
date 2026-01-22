@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../../../core/widgets/custom_text_field.dart';
+import '../widgets/open_camera.dart';
 
 class FormInputPage extends StatefulWidget {
   const FormInputPage({super.key});
@@ -16,6 +18,20 @@ class _FormInputPageState extends State<FormInputPage> {
   String? photoPath;
   DateTime selectedMonth = DateTime.now();
 
+  void _openCamera() async {
+    final result = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const OpenCamera(),
+    );
+
+    if (result != null && mounted) {
+      setState(() {
+        photoPath = result;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +39,7 @@ class _FormInputPageState extends State<FormInputPage> {
   }
 
   void _setPeriodText(DateTime date) {
-    final months = [
+    const months = [
       'Januari',
       'Februari',
       'Maret',
@@ -37,7 +53,6 @@ class _FormInputPageState extends State<FormInputPage> {
       'November',
       'Desember',
     ];
-
     _periodController.text = '${months[date.month - 1]} ${date.year}';
   }
 
@@ -67,23 +82,32 @@ class _FormInputPageState extends State<FormInputPage> {
         padding: const EdgeInsets.all(16),
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: _openCamera,
             child: Container(
-              height: 200,
+              height: 300,
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Center(
-                child: const Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.camera_alt, size: 40, color: Colors.grey),
-                    SizedBox(height: 8),
-                    Text('Ambil Foto Meter'),
-                  ],
-                ),
-              ),
+              child: photoPath == null
+                  ? const Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.camera_alt, size: 40, color: Colors.grey),
+                          SizedBox(height: 8),
+                          Text('Ambil Foto Meter'),
+                        ],
+                      ),
+                    )
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(photoPath!),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                    ),
             ),
           ),
           const SizedBox(height: 16),
@@ -138,7 +162,7 @@ class _FormInputPageState extends State<FormInputPage> {
               backgroundColor: Colors.blueAccent,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../../../core/widgets/custom_text_field.dart';
 import '../widgets/open_camera.dart';
+import '../services/input_service.dart';
 
 class FormInputPage extends StatefulWidget {
   const FormInputPage({super.key});
@@ -17,6 +18,13 @@ class _FormInputPageState extends State<FormInputPage> {
 
   String? photoPath;
   DateTime selectedMonth = DateTime.now();
+  late int idPelanggan;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    idPelanggan = ModalRoute.of(context)!.settings.arguments as int;
+  }
 
   void _openCamera() async {
     final result = await showModalBottomSheet<String>(
@@ -30,6 +38,35 @@ class _FormInputPageState extends State<FormInputPage> {
         photoPath = result;
       });
     }
+  }
+
+  Future<void> _submit() async {
+    if (photoPath == null || _meterController.text.isEmpty) {
+      _showMessage('Lengkapi data');
+      return;
+    }
+
+    final errorMessage = await InputService.submitBacaMeter(
+      idPelanggan: idPelanggan,
+      bulan: selectedMonth,
+      volume: int.parse(_meterController.text),
+      photoPath: photoPath!,
+    );
+
+    if (!mounted) return;
+
+    if (errorMessage == null) {
+      _showMessage('Berhasil simpan');
+      Navigator.pop(context);
+    } else {
+      _showMessage(errorMessage);
+    }
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -54,13 +91,6 @@ class _FormInputPageState extends State<FormInputPage> {
       'Desember',
     ];
     _periodController.text = '${months[date.month - 1]} ${date.year}';
-  }
-
-  @override
-  void dispose() {
-    _meterController.dispose();
-    _periodController.dispose();
-    super.dispose();
   }
 
   @override
@@ -148,7 +178,7 @@ class _FormInputPageState extends State<FormInputPage> {
           const SizedBox(height: 24),
 
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: _submit,
             icon: const Icon(Icons.save, color: Colors.white),
             label: const Text(
               'Simpan Baca Meter',

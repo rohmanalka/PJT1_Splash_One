@@ -3,7 +3,9 @@ import '../models/pelanggan_model.dart';
 import '../services/pelanggan_service.dart';
 
 class CustomerPage extends StatefulWidget {
-  const CustomerPage({super.key});
+  final int? idDistrik;
+
+  const CustomerPage({super.key, this.idDistrik});
 
   @override
   State<CustomerPage> createState() => _CustomerPageState();
@@ -15,7 +17,12 @@ class _CustomerPageState extends State<CustomerPage> {
   @override
   void initState() {
     super.initState();
-    pelangganFuture = PelangganService.getAll();
+
+    if (widget.idDistrik != null) {
+      pelangganFuture = PelangganService.getByDistrik(widget.idDistrik!);
+    } else {
+      pelangganFuture = PelangganService.getAll();
+    }
   }
 
   @override
@@ -41,7 +48,9 @@ class _CustomerPageState extends State<CustomerPage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Data pelanggan kosong'));
+            return const Center(
+              child: Text('Tidak ada pelanggan di distrik ini'),
+            );
           }
 
           final customers = snapshot.data!;

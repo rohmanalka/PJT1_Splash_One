@@ -44,7 +44,7 @@ class DetailCustomerPage extends StatelessWidget {
 
           final meterTerakhir = c['meter_terakhir'];
           final meterText = meterTerakhir != null
-              ? '${meterTerakhir['volume']} m³ (${meterTerakhir['bulan']})'
+              ? '${meterTerakhir['volume']} m³'
               : '-';
 
           final bool sudahTerbaca = c['status'] == 'SUDAH TERBACA';

@@ -1,4 +1,4 @@
-class PelangganModel {
+class CustomerModel {
   final int idPelanggan;
   final String nama;
   final String alamat;
@@ -6,7 +6,7 @@ class PelangganModel {
   final double latitude;
   final double longitude;
 
-  PelangganModel({
+  CustomerModel({
     required this.idPelanggan,
     required this.nama,
     required this.alamat,
@@ -15,8 +15,8 @@ class PelangganModel {
     required this.longitude,
   });
 
-  factory PelangganModel.fromJson(Map<String, dynamic> json) {
-    return PelangganModel(
+  factory CustomerModel.fromJson(Map<String, dynamic> json) {
+    return CustomerModel(
       idPelanggan: json['id_pelanggan'],
       nama: json['nama'],
       alamat: json['alamat'],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../services/pelanggan_service.dart';
+import '../services/customer_service.dart';
 
 class DetailCustomerPage extends StatelessWidget {
   const DetailCustomerPage({super.key});
@@ -28,7 +28,7 @@ class DetailCustomerPage extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: PelangganService.getDetail(idPelanggan),
+        future: CustomerService.getDetail(idPelanggan),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

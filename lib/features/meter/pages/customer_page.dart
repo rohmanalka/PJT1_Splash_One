@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/pelanggan_model.dart';
-import '../services/pelanggan_service.dart';
+import '../models/customer_model.dart';
+import '../services/customer_service.dart';
 
 class CustomerPage extends StatefulWidget {
   final int? idDistrik;
@@ -12,16 +12,16 @@ class CustomerPage extends StatefulWidget {
 }
 
 class _CustomerPageState extends State<CustomerPage> {
-  late Future<List<PelangganModel>> pelangganFuture;
+  late Future<List<CustomerModel>> pelangganFuture;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.idDistrik != null) {
-      pelangganFuture = PelangganService.getByDistrik(widget.idDistrik!);
+      pelangganFuture = CustomerService.getByDistrik(widget.idDistrik!);
     } else {
-      pelangganFuture = PelangganService.getAll();
+      pelangganFuture = CustomerService.getAll();
     }
   }
 
@@ -40,7 +40,7 @@ class _CustomerPageState extends State<CustomerPage> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: FutureBuilder<List<PelangganModel>>(
+      body: FutureBuilder<List<CustomerModel>>(
         future: pelangganFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

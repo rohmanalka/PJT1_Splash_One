@@ -1,18 +1,18 @@
-class DistrikModel {
+class DistrictModel {
   final int id;
   final String nama;
   final String tingkatan;
   final int? parentId;
 
-  DistrikModel({
+  DistrictModel({
     required this.id,
     required this.nama,
     required this.tingkatan,
     this.parentId,
   });
 
-  factory DistrikModel.fromJson(Map<String, dynamic> json) {
-    return DistrikModel(
+  factory DistrictModel.fromJson(Map<String, dynamic> json) {
+    return DistrictModel(
       id: json['id_m_distrik'],
       nama: json['nama'],
       tingkatan: json['tingkatan'],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/distrik_model.dart';
-import '../services/distrik_service.dart';
+import '../models/district_model.dart';
+import '../services/district_service.dart';
 import 'customer_page.dart';
 
 class DistrictPage extends StatelessWidget {
@@ -28,8 +28,8 @@ class DistrictPage extends StatelessWidget {
           ),
         ),
       ),
-      body: FutureBuilder<List<DistrikModel>>(
-        future: DistrikService.getDistrik(parentId: parentId),
+      body: FutureBuilder<List<DistrictModel>>(
+        future: DistrictService.getDistrik(parentId: parentId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

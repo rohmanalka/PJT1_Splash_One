@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
           final total = data['pelanggan'] ?? 0;
           final terbaca = data['terbaca'] ?? 0;
           final belum = data['belum_terbaca'] ?? 0;
-          final progressHarian = total == 0 ? 0.0 : terbaca / total;
+          final progressBulanan = total == 0 ? 0.0 : terbaca / total;
 
           return RefreshIndicator(
             onRefresh: () async => HomeService.getDashboard(),
@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         ProgressCard(
-                          value: progressHarian,
+                          value: progressBulanan,
                           subtitle: '$terbaca dari $total pelanggan selesai',
                         ),
                       ],
@@ -93,10 +93,7 @@ class HomePage extends StatelessWidget {
                   ),
 
                   Transform.translate(
-                    offset: const Offset(
-                      0,
-                      -10,
-                    ), 
+                    offset: const Offset(0, -10),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
@@ -157,33 +154,37 @@ class HomePage extends StatelessWidget {
                             MenuCard(
                               title: 'Pilih Distrik',
                               icon: Icons.map_rounded,
-                              onTap: () =>
-                                  Navigator.pushNamed(context, '/district'),
+                              onTap: () {
+                                Navigator.pushNamed(context, '/district');
+                              },
                             ),
                             MenuCard(
                               title: 'Pelanggan',
                               icon: Icons.list_alt_rounded,
-                              onTap: () =>
-                                  Navigator.pushNamed(context, '/customer'),
+                              onTap: () {
+                                Navigator.pushNamed(context, '/customer');
+                              },
                             ),
                             MenuCard(
                               title: 'Riwayat',
                               icon: Icons.history,
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(context, '/history');
+                              },
                             ),
                             MenuCard(
                               title: 'Keluar',
                               icon: Icons.logout,
                               onTap: () {
                                 Navigator.pushReplacementNamed(
-                                    context, '/login');
+                                  context,
+                                  '/login',
+                                );
                               },
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 40,
-                        ),
+                        const SizedBox(height: 40),
                       ],
                     ),
                   ),

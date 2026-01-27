@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/pelanggan_model.dart';
+import '../models/customer_model.dart';
 import '../../../core/config.dart';
 
-class PelangganService {
-  static Future<List<PelangganModel>> getAll() async {
+class CustomerService {
+  static Future<List<CustomerModel>> getAll() async {
     final response = await http.get(
       Uri.parse('${Config.baseUrl}/pelanggan'),
       headers: {'Accept': 'application/json'},
@@ -16,7 +16,7 @@ class PelangganService {
     final body = jsonDecode(response.body);
 
     return (body['data'] as List)
-        .map((e) => PelangganModel.fromJson(e))
+        .map((e) => CustomerModel.fromJson(e))
         .toList();
   }
 
@@ -28,7 +28,7 @@ class PelangganService {
     return jsonDecode(response.body)['data'];
   }
 
-  static Future<List<PelangganModel>> getByDistrik(int idDistrik) async {
+  static Future<List<CustomerModel>> getByDistrik(int idDistrik) async {
     final response = await http.get(
       Uri.parse('${Config.baseUrl}/pelanggan?distrik=$idDistrik'),
       headers: {'Accept': 'application/json'},
@@ -37,7 +37,7 @@ class PelangganService {
     final body = jsonDecode(response.body);
 
     return (body['data'] as List)
-        .map((e) => PelangganModel.fromJson(e))
+        .map((e) => CustomerModel.fromJson(e))
         .toList();
   }
 }

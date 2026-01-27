@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import '../models/distrik_model.dart';
+import '../models/district_model.dart';
 import '../../../core/config.dart';
 
-class DistrikService {
-  static Future<List<DistrikModel>> getDistrik({int? parentId}) async {
+class DistrictService {
+  static Future<List<DistrictModel>> getDistrik({int? parentId}) async {
     final uri = parentId == null
         ? Uri.parse('${Config.baseUrl}/distrik-petugas')
         : Uri.parse('${Config.baseUrl}/distrik-petugas?parent_id=$parentId');
@@ -17,6 +17,6 @@ class DistrikService {
 
     final body = jsonDecode(response.body);
 
-    return (body['data'] as List).map((e) => DistrikModel.fromJson(e)).toList();
+    return (body['data'] as List).map((e) => DistrictModel.fromJson(e)).toList();
   }
 }

@@ -3,16 +3,16 @@ class CustomerModel {
   final String nama;
   final String alamat;
   final String distrik;
-  final double latitude;
-  final double longitude;
+  final double? latitude;
+  final double? longitude;
 
   CustomerModel({
     required this.idPelanggan,
     required this.nama,
     required this.alamat,
     required this.distrik,
-    required this.latitude,
-    required this.longitude,
+    this.latitude,
+    this.longitude,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
@@ -21,8 +21,8 @@ class CustomerModel {
       nama: json['nama'],
       alamat: json['alamat'],
       distrik: json['distrik'] != null ? json['distrik']['nama'] : '-',
-      latitude: double.parse(json['latitude'].toString()),
-      longitude: double.parse(json['longitude'].toString()),
+      latitude: json['latitude'] != null ? double.parse(json['latitude'].toString()) : null,
+      longitude: json['longitude'] != null ? double.parse(json['longitude'].toString()) : null,
     );
   }
 }

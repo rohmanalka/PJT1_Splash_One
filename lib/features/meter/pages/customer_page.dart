@@ -13,16 +13,36 @@ class CustomerPage extends StatefulWidget {
 
 class _CustomerPageState extends State<CustomerPage> {
   late Future<List<CustomerModel>> pelangganFuture;
+  final TextEditingController searchController = TextEditingController();
+
+  List<CustomerModel> allCustomers = [];
+  List<CustomerModel> filteredCustomers = [];
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.idDistrik != null) {
-      pelangganFuture = CustomerService.getByDistrik(widget.idDistrik!);
-    } else {
-      pelangganFuture = CustomerService.getAll();
-    }
+    pelangganFuture = widget.idDistrik != null
+        ? CustomerService.getByDistrik(widget.idDistrik!)
+        : CustomerService.getAll();
+  }
+
+  void _filterCustomer(String keyword) {
+    setState(() {
+      filteredCustomers = allCustomers.where((c) {
+        final name = c.nama.toLowerCase();
+        final address = c.alamat.toLowerCase();
+        final search = keyword.toLowerCase();
+
+        return name.contains(search) || address.contains(search);
+      }).toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,42 +68,93 @@ class _CustomerPageState extends State<CustomerPage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
-              child: Text('Tidak ada pelanggan di distrik ini'),
-            );
+            return const Center(child: Text('Tidak ada pelanggan'));
           }
 
-          final customers = snapshot.data!;
+          allCustomers = snapshot.data!;
+          filteredCustomers = searchController.text.isEmpty
+              ? allCustomers
+              : filteredCustomers;
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: customers.length,
-            itemBuilder: (context, index) {
-              final c = customers[index];
-
-              return Card(
-                margin: const EdgeInsets.only(bottom: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: const Icon(Icons.person, color: Colors.blueAccent),
-                  title: Text(
-                    c.nama,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: TextField(
+                  controller: searchController,
+                  onChanged: _filterCustomer,
+                  decoration: InputDecoration(
+                    hintText: 'Cari nama / alamat pelanggan...',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              searchController.clear();
+                              _filterCustomer('');
+                            },
+                          )
+                        : null,
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Colors.blueAccent,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
-                  subtitle: Text(c.alamat),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/detail',
-                      arguments: c.idPelanggan,
-                    );
-                  },
                 ),
-              );
-            },
+              ),
+
+              Expanded(
+                child: filteredCustomers.isEmpty
+                    ? const Center(child: Text('Pelanggan tidak ditemukan'))
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: filteredCustomers.length,
+                        itemBuilder: (context, index) {
+                          final c = filteredCustomers[index];
+
+                          return Card(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+                              leading: const Icon(
+                                Icons.person,
+                                color: Colors.blueAccent,
+                              ),
+                              title: Text(
+                                c.nama,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(c.alamat),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/detail',
+                                  arguments: c.idPelanggan,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+              ),
+            ],
           );
         },
       ),

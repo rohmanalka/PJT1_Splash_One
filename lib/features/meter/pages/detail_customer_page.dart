@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/customer_service.dart';
+import '../../../core/widgets/custom_appbar.dart';
 
 class DetailCustomerPage extends StatelessWidget {
   const DetailCustomerPage({super.key});
@@ -15,17 +16,10 @@ class DetailCustomerPage extends StatelessWidget {
     final idPelanggan = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: const CustomAppBar(
+        title: 'Detil Pelanggan',
         backgroundColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Detail Pelanggan',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        elevation: 3,
       ),
       body: FutureBuilder<Map<String, dynamic>>(
         future: CustomerService.getDetail(idPelanggan),

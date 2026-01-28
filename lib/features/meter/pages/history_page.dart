@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/history_service.dart';
+import '../../../core/widgets/custom_appbar.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -7,21 +8,10 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: const CustomAppBar(
+        title: 'Riwayat Hari Ini',
         backgroundColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
         elevation: 3,
-        title: Text(
-          'Riwayat Hari Ini',
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
       ),
       body: FutureBuilder<List<dynamic>>(
         future: HistoryService.getToday(),

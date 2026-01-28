@@ -4,6 +4,7 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../../../core/widgets/custom_text_field.dart';
 import '../widgets/open_camera.dart';
 import '../services/input_service.dart';
+import '../../../core/widgets/custom_appbar.dart';
 
 class FormInputPage extends StatefulWidget {
   const FormInputPage({super.key});
@@ -109,17 +110,10 @@ class _FormInputPageState extends State<FormInputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: const CustomAppBar(
+        title: 'Input Baca Meter',
         backgroundColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Input Baca Meter',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        elevation: 3,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

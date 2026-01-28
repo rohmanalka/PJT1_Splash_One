@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/district_model.dart';
 import '../services/district_service.dart';
 import 'customer_page.dart';
+import '../../../core/widgets/custom_appbar.dart';
 
 class DistrictPage extends StatelessWidget {
   final int? parentId;
@@ -12,21 +13,10 @@ class DistrictPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: const CustomAppBar(
+        title: 'Daftar Distrik',
         backgroundColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
         elevation: 3,
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
       ),
       body: FutureBuilder<List<DistrictModel>>(
         future: DistrictService.getDistrik(parentId: parentId),

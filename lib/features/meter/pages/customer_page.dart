@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/customer_model.dart';
 import '../services/customer_service.dart';
+import '../../../core/widgets/custom_appbar.dart';
 
 class CustomerPage extends StatefulWidget {
   final int? idDistrik;
@@ -48,17 +49,10 @@ class _CustomerPageState extends State<CustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: const CustomAppBar(
+        title: 'Daftar Pelanggan',
         backgroundColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Daftar Pelanggan',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        elevation: 3,
       ),
       body: FutureBuilder<List<CustomerModel>>(
         future: pelangganFuture,

@@ -19,6 +19,7 @@ class _FormInputPageState extends State<FormInputPage> {
   String? photoPath;
   DateTime selectedMonth = DateTime.now();
   late int idPelanggan;
+  bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -41,23 +42,35 @@ class _FormInputPageState extends State<FormInputPage> {
   }
 
   Future<void> _submit() async {
+    if (_isLoading) return;
+
     if (photoPath == null || _meterController.text.isEmpty) {
       _showMessage('Lengkapi data');
       return;
     }
 
+    setState(() {
+      _isLoading = true;
+    });
+
+    // print('SUBMIT START');
     final errorMessage = await InputService.submitBacaMeter(
       idPelanggan: idPelanggan,
       bulan: selectedMonth,
       volume: int.parse(_meterController.text),
       photoPath: photoPath!,
     );
+    // print('SUBMIT END');
 
     if (!mounted) return;
 
+    setState(() {
+      _isLoading = false;
+    });
+
     if (errorMessage == null) {
       _showMessage('Berhasil simpan');
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     } else {
       _showMessage(errorMessage);
     }
@@ -177,17 +190,8 @@ class _FormInputPageState extends State<FormInputPage> {
           ),
           const SizedBox(height: 24),
 
-          ElevatedButton.icon(
-            onPressed: _submit,
-            icon: const Icon(Icons.save, color: Colors.white),
-            label: const Text(
-              'Simpan Baca Meter',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          ElevatedButton(
+            onPressed: _isLoading ? null : _submit,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueAccent,
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -195,6 +199,30 @@ class _FormInputPageState extends State<FormInputPage> {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
             ),
+            child: _isLoading
+                ? const SizedBox(
+                    height: 22,
+                    width: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.5,
+                      color: Colors.white,
+                    ),
+                  )
+                : const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.save, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'Simpan Baca Meter',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),

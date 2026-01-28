@@ -11,26 +11,26 @@ class InputService {
   }) async {
     final uri = Uri.parse('${Config.baseUrl}/input');
 
-    final request = http.MultipartRequest('POST', uri);
+    final request = http.MultipartRequest('POST', uri)
+      ..headers['Accept'] = 'application/json'
+      ..fields['id_pelanggan'] = idPelanggan.toString()
+      ..fields['bulan'] =
+          '${bulan.year}-${bulan.month.toString().padLeft(2, '0')}-01'
+      ..fields['volume'] = volume.toString()
+      ..files.add(await http.MultipartFile.fromPath('foto', photoPath));
 
-    request.fields['id_pelanggan'] = idPelanggan.toString();
-    request.fields['bulan'] =
-        '${bulan.year}-${bulan.month.toString().padLeft(2, '0')}-01';
-    request.fields['volume'] = volume.toString();
-    request.files.add(await http.MultipartFile.fromPath('foto', photoPath));
-
-    final response = await request.send();
-    final body = await response.stream.bytesToString();
-
-    // debugPrint('STATUS: ${response.statusCode}');
-    // debugPrint('BODY: $body');
-
-    final json = body.isNotEmpty ? jsonDecode(body) : null;
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
 
     if (response.statusCode == 201) {
       return null;
     }
 
-    return json?['message'] ?? 'Terjadi kesalahan';
+    if (response.body.isNotEmpty) {
+      final json = jsonDecode(response.body);
+      return json['message'] ?? 'Gagal menyimpan';
+    }
+
+    return 'Terjadi kesalahan';
   }
 }

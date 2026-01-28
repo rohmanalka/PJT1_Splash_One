@@ -39,8 +39,13 @@ class DetailCustomerPage extends StatelessWidget {
           }
 
           final c = snapshot.data!;
-          final latitude = double.parse(c['latitude'].toString());
-          final longitude = double.parse(c['longitude'].toString());
+          final double? latitude = c['latitude'] != null
+              ? double.tryParse(c['latitude'].toString())
+              : null;
+
+          final double? longitude = c['longitude'] != null
+              ? double.tryParse(c['longitude'].toString())
+              : null;
 
           final meterTerakhir = c['meter_terakhir'];
           final meterText = meterTerakhir != null
@@ -107,7 +112,9 @@ class DetailCustomerPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
-                          onPressed: () => openGoogleMaps(latitude, longitude),
+                          onPressed: latitude is double && longitude is double
+                              ? () => openGoogleMaps(latitude, longitude)
+                              : null,
                           icon: const Icon(Icons.map, color: Colors.white),
                           label: const Text(
                             'Buka Navigasi Google Maps',
@@ -145,7 +152,7 @@ class DetailCustomerPage extends StatelessWidget {
                     const Divider(height: 1),
                     _infoTile(
                       Icons.info,
-                      'Status',
+                      'Status Bulan Ini',
                       c['status'],
                       valueColor: sudahTerbaca ? Colors.green : Colors.red,
                     ),
@@ -154,32 +161,64 @@ class DetailCustomerPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: sudahTerbaca
-                      ? null
-                      : () {
-                          Navigator.pushNamed(
-                            context,
-                            '/input',
-                            arguments: idPelanggan,
-                          );
-                        },
-                  icon: const Icon(Icons.edit, color: Colors.white),
-                  label: const Text(
-                    'Input Baca Meter',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: Colors.blueAccent,
-                    disabledBackgroundColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // Navigator.pushNamed(
+                        //   context,
+                        //   '/history-customer',
+                        //   arguments: idPelanggan,
+                        // );
+                      },
+                      icon: const Icon(Icons.history, color: Colors.white),
+                      label: const Text(
+                        'Lihat Riwayat',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/input',
+                          arguments: idPelanggan,
+                        );
+                      },
+                      icon: const Icon(Icons.edit, color: Colors.white),
+                      label: const Text(
+                        'Input Baca Meter',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: Colors.blueAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           );

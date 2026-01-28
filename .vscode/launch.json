@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/JSFlutter/pjt1_ssplash_one/pjt1_splash_one/linux/flutter",
-      "program": "c:/JSFlutter/pjt1_ssplash_one/pjt1_splash_one/linux/flutter/build/Debug/outDebug",
+      "cwd": "c:/JSFlutter/pjt1_splash_one/linux/flutter",
+      "program": "c:/JSFlutter/pjt1_splash_one/linux/flutter/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

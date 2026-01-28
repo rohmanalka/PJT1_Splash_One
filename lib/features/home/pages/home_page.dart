@@ -33,22 +33,18 @@ class HomePage extends StatelessWidget {
       body: FutureBuilder<Map<String, dynamic>>(
         future: HomeService.getDashboard(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+          final data = snapshot.data ?? {};
 
-          if (!snapshot.hasData) {
-            return const Center(child: Text('Gagal memuat dashboard'));
-          }
-
-          final data = snapshot.data!;
           final total = data['pelanggan'] ?? 0;
           final terbaca = data['terbaca'] ?? 0;
           final belum = data['belum_terbaca'] ?? 0;
+
           final progressBulanan = total == 0 ? 0.0 : terbaca / total;
 
           return RefreshIndicator(
-            onRefresh: () async => HomeService.getDashboard(),
+            onRefresh: () async {
+              await HomeService.getDashboard();
+            },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
@@ -84,10 +80,17 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        ProgressCard(
-                          value: progressBulanan,
-                          subtitle: '$terbaca dari $total pelanggan selesai',
-                        ),
+
+                        if (snapshot.connectionState == ConnectionState.waiting)
+                          const LinearProgressIndicator(
+                            backgroundColor: Colors.white24,
+                            color: Colors.white,
+                          )
+                        else
+                          ProgressCard(
+                            value: progressBulanan,
+                            subtitle: '$terbaca dari $total pelanggan selesai',
+                          ),
                       ],
                     ),
                   ),
@@ -154,33 +157,28 @@ class HomePage extends StatelessWidget {
                             MenuCard(
                               title: 'Pilih Distrik',
                               icon: Icons.map_rounded,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/district');
-                              },
+                              onTap: () =>
+                                  Navigator.pushNamed(context, '/district'),
                             ),
                             MenuCard(
                               title: 'Pelanggan',
                               icon: Icons.list_alt_rounded,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/customer');
-                              },
+                              onTap: () =>
+                                  Navigator.pushNamed(context, '/customer'),
                             ),
                             MenuCard(
                               title: 'Riwayat',
                               icon: Icons.history,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/history');
-                              },
+                              onTap: () =>
+                                  Navigator.pushNamed(context, '/history'),
                             ),
                             MenuCard(
                               title: 'Keluar',
                               icon: Icons.logout,
-                              onTap: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/login',
-                                );
-                              },
+                              onTap: () => Navigator.pushReplacementNamed(
+                                context,
+                                '/login',
+                              ),
                             ),
                           ],
                         ),

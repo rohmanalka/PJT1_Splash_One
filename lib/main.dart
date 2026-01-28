@@ -5,6 +5,7 @@ import 'features/meter/pages/customer_page.dart';
 import 'features/meter/pages/district_page.dart';
 import 'features/meter/pages/detail_customer_page.dart';
 import 'features/meter/pages/form_input_page.dart';
+import 'features/meter/pages/history_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/district': (context) => const DistrictPage(),
         '/detail': (context) => const DetailCustomerPage(),
         '/input': (context) => const FormInputPage(),
+        '/history': (context) => const HistoryPage(),
       },
     );
   }

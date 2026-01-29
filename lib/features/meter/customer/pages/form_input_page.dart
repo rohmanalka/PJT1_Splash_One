@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import '../../../core/widgets/custom_text_field.dart';
-import '../widgets/open_camera.dart';
+import '../../../../core/widgets/custom_text_field.dart';
+import '../../widgets/open_camera.dart';
 import '../services/input_service.dart';
-import '../../../core/widgets/custom_appbar.dart';
+import '../../../../core/widgets/custom_appbar.dart';
 
 class FormInputPage extends StatefulWidget {
   const FormInputPage({super.key});

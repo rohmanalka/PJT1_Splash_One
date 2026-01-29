@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../core/config.dart';
+import '../../../../core/config.dart';
 
 class HistoryService {
   static Future<List<dynamic>> getToday() async {

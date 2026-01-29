@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../models/district_model.dart';
-import '../../../core/config.dart';
+import '../../../../core/config.dart';
 
 class DistrictService {
   static Future<List<DistrictModel>> getDistrik({int? parentId}) async {

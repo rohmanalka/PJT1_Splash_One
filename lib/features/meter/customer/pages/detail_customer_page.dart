@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/customer_service.dart';
-import '../../../core/widgets/custom_appbar.dart';
+import '../../../../core/widgets/custom_appbar.dart';
 
 class DetailCustomerPage extends StatelessWidget {
   const DetailCustomerPage({super.key});

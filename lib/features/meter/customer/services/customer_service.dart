@@ -2,7 +2,7 @@ import 'dart:convert';
 // import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/customer_model.dart';
-import '../../../core/config.dart';
+import '../../../../core/config.dart';
 
 class CustomerService {
   static Future<List<CustomerModel>> getAll() async {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../services/history_service.dart';
-import '../../../core/widgets/custom_appbar.dart';
+import '../../../../core/widgets/custom_appbar.dart';
 
-class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
+class UserHistoryPage extends StatelessWidget {
+  const UserHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/district_model.dart';
 import '../services/district_service.dart';
-import 'customer_page.dart';
-import '../../../core/widgets/custom_appbar.dart';
+import '../../customer/pages/customer_page.dart';
+import '../../../../core/widgets/custom_appbar.dart';
 
 class DistrictPage extends StatelessWidget {
   final int? parentId;

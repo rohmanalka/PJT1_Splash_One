@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'features/auth/pages/login_page.dart';
 import 'features/home/pages/home_page.dart';
-import 'features/meter/pages/customer_page.dart';
-import 'features/meter/pages/district_page.dart';
-import 'features/meter/pages/detail_customer_page.dart';
-import 'features/meter/pages/form_input_page.dart';
-import 'features/meter/pages/history_page.dart';
+import 'features/meter/customer/pages/customer_page.dart';
+import 'features/meter/district/pages/district_page.dart';
+import 'features/meter/customer/pages/detail_customer_page.dart';
+import 'features/meter/customer/pages/form_input_page.dart';
+import 'features/meter/history/pages/user_history_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         '/district': (context) => const DistrictPage(),
         '/detail': (context) => const DetailCustomerPage(),
         '/input': (context) => const FormInputPage(),
-        '/history': (context) => const HistoryPage(),
+        '/history': (context) => const UserHistoryPage(),
       },
     );
   }

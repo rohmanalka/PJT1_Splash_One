@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/customer_model.dart';
 import '../services/customer_service.dart';
-import '../../../core/widgets/custom_appbar.dart';
+import '../../../../core/widgets/custom_appbar.dart';
 
 class CustomerPage extends StatefulWidget {
   final int? idDistrik;

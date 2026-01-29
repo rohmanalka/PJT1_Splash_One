@@ -6,6 +6,8 @@ import 'features/meter/district/pages/district_page.dart';
 import 'features/meter/customer/pages/detail_customer_page.dart';
 import 'features/meter/customer/pages/form_input_page.dart';
 import 'features/meter/history/pages/user_history_page.dart';
+import 'features/meter/history/pages/customer_history_page.dart';
+import 'features/meter/history/pages/customer_history_detail_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +32,8 @@ class MyApp extends StatelessWidget {
         '/detail': (context) => const DetailCustomerPage(),
         '/input': (context) => const FormInputPage(),
         '/history': (context) => const UserHistoryPage(),
+        '/customer/history': (_) => const CustomerHistoryPage(),
+        '/customer/history/detail': (_) => const CustomerHistoryDetailPage(),
       },
     );
   }

@@ -160,11 +160,11 @@ class DetailCustomerPage extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        // Navigator.pushNamed(
-                        //   context,
-                        //   '/history-customer',
-                        //   arguments: idPelanggan,
-                        // );
+                        Navigator.pushNamed(
+                          context,
+                          '/customer/history',
+                          arguments: idPelanggan,
+                        );
                       },
                       icon: const Icon(Icons.history, color: Colors.white),
                       label: const Text(

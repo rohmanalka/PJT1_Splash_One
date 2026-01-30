@@ -6,14 +6,14 @@ import '../../../../core/config.dart';
 
 class CustomerService {
   static Future<List<CustomerModel>> getAll() async {
-    print('GET ALL CUSTOMER DIPANGGIL');
+    // print('GET ALL CUSTOMER DIPANGGIL');
     final response = await http.get(
       Uri.parse('${Config.baseUrl}/pelanggan'),
       headers: {'Accept': 'application/json'},
     );
 
-    print('STATUS: ${response.statusCode}');
-    print('BODY: ${response.body}');
+    // print('STATUS: ${response.statusCode}');
+    // print('BODY: ${response.body}');
 
     final body = jsonDecode(response.body);
 
@@ -31,14 +31,14 @@ class CustomerService {
   }
 
   static Future<List<CustomerModel>> getByDistrik(int idDistrik) async {
-    print('GET DISTRIK CUSTOMER DIPANGGIL');
+    // print('GET DISTRIK CUSTOMER DIPANGGIL');
     final response = await http.get(
       Uri.parse('${Config.baseUrl}/pelanggan?distrik=$idDistrik'),
       headers: {'Accept': 'application/json'},
     );
 
-    print('STATUS: ${response.statusCode}');
-    print('BODY: ${response.body}');
+    // print('STATUS: ${response.statusCode}');
+    // print('BODY: ${response.body}');
 
     final body = jsonDecode(response.body);
 

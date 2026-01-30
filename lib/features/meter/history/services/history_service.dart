@@ -5,7 +5,7 @@ import '../../../../core/config.dart';
 class HistoryService {
   static Future<List<dynamic>> getToday() async {
     final response = await http.get(
-      Uri.parse('${Config.baseUrl}/riwayat'),
+      Uri.parse('${Config.baseUrl}/history/daily'),
     );
 
     if (response.statusCode == 200) {

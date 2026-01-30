@@ -17,7 +17,7 @@ class DetailCustomerPage extends StatelessWidget {
 
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Detil Pelanggan',
+        title: 'Informasi Pelanggan',
         backgroundColor: Colors.blueAccent,
         elevation: 3,
       ),
@@ -64,7 +64,7 @@ class DetailCustomerPage extends StatelessWidget {
                     c['nama'],
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('ID Pelanggan: ${c['id_pelanggan']}'),
+                  subtitle: Text(c['email']),
                 ),
               ),
               const SizedBox(height: 12),
@@ -96,7 +96,7 @@ class DetailCustomerPage extends StatelessWidget {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              '$latitude, $longitude',
+                              'lat: $latitude\nlong: $longitude',
                               style: const TextStyle(fontFamily: 'monospace'),
                             ),
                           ),
@@ -142,7 +142,7 @@ class DetailCustomerPage extends StatelessWidget {
                     const Divider(height: 1),
                     _infoTile(Icons.map, 'Distrik', c['distrik']),
                     const Divider(height: 1),
-                    _infoTile(Icons.speed, 'Meter Terakhir', meterText),
+                    _infoTile(Icons.speed, 'Meter Bulan Lalu', meterText),
                     const Divider(height: 1),
                     _infoTile(
                       Icons.info,

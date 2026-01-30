@@ -74,7 +74,7 @@ class _CustomerHistoryPageState extends State<CustomerHistoryPage> {
               controller: searchController,
               onChanged: (_) => applySearch(),
               decoration: InputDecoration(
-                hintText: 'Cari nama atau alamat...',
+                hintText: 'Cari bulan atau tahun...',
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: searchController.text.isNotEmpty
                     ? IconButton(

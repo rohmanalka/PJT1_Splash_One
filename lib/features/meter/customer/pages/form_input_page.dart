@@ -6,6 +6,8 @@ import '../../widgets/open_camera.dart';
 import '../services/input_service.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 
+enum MessageType { success, error, warning }
+
 class FormInputPage extends StatefulWidget {
   const FormInputPage({super.key});
 
@@ -46,7 +48,7 @@ class _FormInputPageState extends State<FormInputPage> {
     if (_isLoading) return;
 
     if (photoPath == null || _meterController.text.isEmpty) {
-      _showMessage('Lengkapi data');
+      _showMessage('Lengkapi data', type: MessageType.warning);
       return;
     }
 
@@ -70,17 +72,36 @@ class _FormInputPageState extends State<FormInputPage> {
     });
 
     if (errorMessage == null) {
-      _showMessage('Berhasil simpan');
+      _showMessage('Berhasil simpan', type: MessageType.success);
       Navigator.pop(context, true);
     } else {
-      _showMessage(errorMessage);
+      _showMessage(errorMessage, type: MessageType.error);
     }
   }
 
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+  void _showMessage(String message, {required MessageType type}) {
+    Color bgColor;
+
+    switch (type) {
+      case MessageType.success:
+        bgColor = Colors.green;
+        break;
+      case MessageType.error:
+        bgColor = Colors.red;
+        break;
+      case MessageType.warning:
+        bgColor = Colors.orange;
+        break;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: bgColor,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+        duration: const Duration(seconds: 4),
+      ),
+    );
   }
 
   @override

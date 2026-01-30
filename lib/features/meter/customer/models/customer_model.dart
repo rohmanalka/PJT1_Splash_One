@@ -1,6 +1,7 @@
 class CustomerModel {
   final int idPelanggan;
   final String nama;
+  final String? email;
   final String alamat;
   final String distrik;
   final String status;
@@ -10,6 +11,7 @@ class CustomerModel {
   CustomerModel({
     required this.idPelanggan,
     required this.nama,
+    required this.email,
     required this.alamat,
     required this.distrik,
     required this.status,
@@ -21,6 +23,7 @@ class CustomerModel {
     return CustomerModel(
       idPelanggan: json['id_pelanggan'],
       nama: json['nama'],
+      email: json['email'],
       alamat: json['alamat'] ?? '-',
       distrik: json['distrik']?['nama'] ?? '-',
       status: json['status'] ?? 'BELUM TERBACA', 

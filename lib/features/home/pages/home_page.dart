@@ -4,8 +4,25 @@ import '../widgets/progress_card.dart';
 import '../widgets/stat_card.dart';
 import '../widgets/menu_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late Future<Map<String, dynamic>> _dashboardFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDashboard();
+  }
+
+  void _loadDashboard() {
+    _dashboardFuture = HomeService.getDashboard();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +48,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: HomeService.getDashboard(),
+        future: _dashboardFuture,
         builder: (context, snapshot) {
           final data = snapshot.data ?? {};
 
@@ -43,7 +60,10 @@ class HomePage extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () async {
-              await HomeService.getDashboard();
+              setState(() {
+                _loadDashboard();
+              });
+              await _dashboardFuture;
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),

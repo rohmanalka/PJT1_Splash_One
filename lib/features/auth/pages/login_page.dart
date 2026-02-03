@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pjt1_splash_one/features/customer_app/pages/customer_home_page.dart';
 import '../../../core/widgets/custom_text_field.dart';
 import '../../home/pages/home_page.dart';
+import '../services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +15,63 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loginPelanggan() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      _showError('Email dan password wajib diisi');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final success = await AuthService.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      if (!success) {
+        _showError('Email atau password salah');
+        return;
+      }
+
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const CustomerHomePage()),
+      );
+    } catch (e) {
+      _showError(e.toString());
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _masukPetugas() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomePage()),
+    );
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +82,14 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('lib/images/LOGO_PJT.png', width: 150, height: 150),
+              GestureDetector(
+                onTap: _masukPetugas,
+                child: Image.asset(
+                  'lib/images/LOGO_PJT.png',
+                  width: 150,
+                  height: 150,
+                ),
+              ),
               const SizedBox(height: 32),
 
               Text(
@@ -56,24 +122,20 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
+                  onPressed: _isLoading ? null : _loginPelanggan,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
-                    disabledBackgroundColor: Colors.blueAccent.withValues(alpha: 0.5),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'MASUK',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text(
+                          'MASUK',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                 ),
               ),
             ],

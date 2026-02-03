@@ -8,6 +8,7 @@ import 'features/meter/customer/pages/form_input_page.dart';
 import 'features/meter/history/pages/user_history_page.dart';
 import 'features/meter/history/pages/customer_history_page.dart';
 import 'features/meter/history/pages/customer_history_detail_page.dart';
+import 'features/customer_app/pages/customer_home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/history': (context) => const UserHistoryPage(),
         '/customer/history': (_) => const CustomerHistoryPage(),
         '/customer/history/detail': (_) => const CustomerHistoryDetailPage(),
+        '/customerapp/home': (context) => const CustomerHomePage(),
       },
     );
   }

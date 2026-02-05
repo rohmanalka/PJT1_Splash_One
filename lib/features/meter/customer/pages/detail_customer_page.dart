@@ -166,18 +166,23 @@ class DetailCustomerPage extends StatelessWidget {
                           arguments: idPelanggan,
                         );
                       },
-                      icon: const Icon(Icons.history, color: Colors.white),
+                      icon: const Icon(Icons.history),
                       label: const Text(
                         'Lihat Riwayat',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Colors.green,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.blue,
+                        side: const BorderSide(
+                          color: Colors.blue,
+                          width: 2,
+                        ),
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
